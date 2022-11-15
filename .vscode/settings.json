@@ -1,6 +1,6 @@
 {
     "eslint.workingDirectories": [
         "./App_backend",
-        "./App_frontend"
+        "./app_frontend"
     ]
 }
