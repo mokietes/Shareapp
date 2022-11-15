@@ -2,15 +2,15 @@ export default {
   name: "user",
   title: "User",
   type: "document",
-  field: [
+  fields: [
     {
       name: "userName",
-      titile: "UserName",
+      title: "UserName",
       type: "string",
     },
     {
       name: "image",
-      titile: "Image",
+      title: "Image",
       type: "string",
     },
   ],
