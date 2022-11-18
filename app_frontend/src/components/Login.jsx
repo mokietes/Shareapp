@@ -15,9 +15,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const responseGoogle = (response) => {
-    //console.log(response);
+    console.log(response);
     const userObject = jwt_decode(response.credential);
-    //console.log(userObject);
+    console.log(userObject);
     localStorage.setItem("user", JSON.stringify(userObject));
     const { name, sub, picture } = userObject;
     const doc = {
@@ -51,18 +51,19 @@ const Login = () => {
             <div className="shadow-2xl">
               <GoogleLogin
                 // clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
-                // render={(renderProps) => (
-                //   <button
-                //     type="button"
-                //     className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-                //     onClick={renderProps.onClick}
-                //     disabled={renderProps.disabled}
-                //   >
-                //     <FcGoogle className="mr-4" /> Sign in with Google
-                //   </button>
-                // )}
+                render={(renderProps) => (
+                  <button
+                    type="button"
+                    className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                  >
+                    <FcGoogle className="mr-4" /> Sign in with Google
+                  </button>
+                )}
                 onSuccess={responseGoogle}
-                onError={() => console.log("error")}
+                onFailure={responseGoogle}
+                cookiePolicy="single_host_origin"
               />
             </div>
           </div>
