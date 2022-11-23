@@ -5,6 +5,9 @@ import { NavLink, Link } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 
+const isNotActiveStyle = "flex item-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize"
+const isActiveStyle = "flex  item-center px-5 gap-3 font-extrabold boarder-r-2 boarder-black transition-all duration-200 ease-in-out capitalize"
+
 const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
@@ -16,8 +19,12 @@ const Sidebar = ({ user, closeToggle }) => {
           to="/"
           className="flex px-5 gap-2 my-6 pt-1 w-190 items-center"
           onClick={handleCloseSidebar}
-        ></Link>
-        <img scr={logo} alt="logo" className="w-full" />
+        >
+          <img scr={logo} alt="logo" className="w-full" />
+        </Link>
+        <div className="flex flex-col gap-5">
+          <NavLink to="/" className={({isActive})=>isActive ? isActiveStyle : isNotActive></NavLink>
+        </div>
       </div>
     </div>
   );
