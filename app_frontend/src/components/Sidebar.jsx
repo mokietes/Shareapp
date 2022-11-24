@@ -1,7 +1,8 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { RiHomeFill } from "react-icons/ri";
-//import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+import { categories } from "../utils/data";
 
 import logo from "../assets/logo.png";
 
@@ -34,6 +35,25 @@ const Sidebar = ({ user, closeToggle }) => {
             <RiHomeFill />
             Home
           </NavLink>
+          <h3 className="mt-2 px-5 text-base 2xl:text-xl">
+            Discover cateogries
+          </h3>
+          {categories.slice(0, categories.length - 1).map((category) => (
+            <NavLink
+              to={`/category/${category.name}`}
+              className={({ isActive }) =>
+                isActive ? isActiveStyle : isNotActiveStyle
+              }
+              onClick={handleCloseSidebar}
+              key={category.name}
+            >
+              <img
+                src={category.image}
+                className="w-8 h-8 rounded-full shadow-sm"
+              />
+              {category.name}
+            </NavLink>
+          ))}
         </div>
       </div>
     </div>
