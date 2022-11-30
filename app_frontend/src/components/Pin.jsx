@@ -76,7 +76,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
               {alreadySaved ? (
                 <button
                   type="button"
-                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outlined-none"
+                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
                   {save?.length}Saved
                 </button>
@@ -87,7 +87,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     savePin(_id);
                   }}
                   type="button"
-                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outlined-none"
+                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
                   Save
                 </button>
@@ -98,9 +98,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 <a
                   href={destination}
                   target="blank"
+                  className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
                   rel="noreferrer"
-                  className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:100 hover:shadow-md"
                 >
+                  {" "}
                   <BsFillArrowUpRightCircleFill />{" "}
                   {destination.length > 20
                     ? destination.slice(8, 22)
@@ -114,7 +115,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     e.stopPropagation();
                     deletePin(_id);
                   }}
-                  className="bg-white-500 p-2 opacity-70 hover:opacity-100 text-dark font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outlined-none"
+                  className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
                 >
                   <AiTwotoneDelete />
                 </button>
@@ -124,7 +125,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         )}
       </div>
       <Link
-        to={`user-profile/${user?._id}`}
+        to={`user-profile/${postedBy?._id}`}
         className="flex gap-2 mt-2 items-center"
       >
         <img
