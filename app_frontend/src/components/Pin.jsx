@@ -13,9 +13,31 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const [savingPost, setSavingPost] = useState(false);
   const navigate = useNavigate();
   const user = fetchUser();
-  const alreadySaved = save?.save?.filter(
+  const alreadySaved = !!save?.save?.filter(
     (item) => item.postedBy._id === user.googleId
-  );
+  )?.length;
+  const savePin = (id) => {
+    if (!alreadySaved) {
+      setSavingPost(true);
+      client
+        .patch(id)
+        .setIfMissing({ save: [] })
+        .insert("after", "save[-1", [
+          {
+            _key: uuidv4(),
+            userId: {
+              _type: "postedBy",
+              _ref: user.googleId,
+            },
+          },
+        ])
+        .commit()
+        .then(() => {
+          window.location.reload();
+          setSavingPost(false);
+        });
+    }
+  };
 
   return (
     <div className="m-2">
@@ -45,10 +67,24 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 <MdDownloadForOffline />
               </a>
             </div>
-            {alreadySaved?.length !== 0 ? (
-              <button>Saved</button>
+            {alreadySaved ? (
+              <button
+                type="button"
+                className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outlined-none"
+              >
+                {save?.length}Saved
+              </button>
             ) : (
-              <button>Save</button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  savePin(_id);
+                }}
+                type="button"
+                className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outlined-none"
+              >
+                Save
+              </button>
             )}
           </div>
         )}
