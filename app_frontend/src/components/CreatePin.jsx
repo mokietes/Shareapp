@@ -106,22 +106,52 @@ const CreatePin = ({ user }) => {
             className="outline-none text-2xl sm:text-3xl font-bold boarder-b-2 border-gray-200 p-2"
           />
           {user && (
-            <div className="flex gap-2 my-2 my-2 items-center bg-white rounded-lg">
+            <div className="flex gap-2 mt-2 mb-2 items-center bg-white rounded-lg ">
               <img
                 src={user.image}
                 classname="w-10 h-10 rounded-full"
                 alt="user-profile"
               />
               <p className="font-bold">{user.userName}</p>
-              <input
-                type="text"
-                value={about}
-                onChange={(e) => setAbout(e.target.value)}
-                placeholder="What is your pin about"
-                className="outline-none text-base sm:text-lg font-bold boarder-b-2 border-gray-200 p-2"
-              />
             </div>
           )}
+          <input
+            type="text"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
+            placeholder="What is your pin about"
+            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+          />
+          <input
+            type="text"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            placeholder="Add a destination link"
+            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+          />{" "}
+          <div className="flex flex-col">
+            <div>
+              <p className="mb-2  font-semibold text-lg sm:text-xl">
+                Chose Pin Category
+              </p>
+              <select
+                onChange={(e) => setCatagory(e.target.value)}
+                className="outline-none w-4/5 text-base border-b-2 border-gray-200 rounded-md cursor-pointer"
+              >
+                <option value="other" className="bg-white">
+                  Select Catagory
+                </option>
+                {categories.map((catagory) => (
+                  <option
+                    className="text-base boarder-0 outline-none capitlize bg-white text-black"
+                    value={catagory.name}
+                  >
+                    {catagory.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
