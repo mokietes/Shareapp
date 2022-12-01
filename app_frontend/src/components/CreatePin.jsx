@@ -79,15 +79,15 @@ const CreatePin = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5">
+    <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5 scroll-smooth md:scroll-auto">
       {fields && (
         <p className="text-red-500 mb-5 text-xl transition-all duration-150 ease-in ">
           Please add all fields.
         </p>
       )}
-      <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
+      <div className="flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
         <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
-          <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
+          <div className="flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
             {loading && <Spinner />}
             {wrongImageType && <p>Wrong Image Type</p>}
             {!imageAsset ? (
@@ -140,7 +140,7 @@ const CreatePin = ({ user }) => {
             <div className="flex gap-2 mt-2 mb-2 items-center bg-white rounded-lg ">
               <img
                 src={user.image}
-                classname="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
                 alt="user-profile"
               />
               <p className="font-bold">{user.userName}</p>
@@ -154,30 +154,33 @@ const CreatePin = ({ user }) => {
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
           <input
-            type="text"
+            type="url"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             placeholder="Add a destination link"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
-          />{" "}
+          />
           <div className="flex flex-col">
             <div>
-              <p className="mb-2  font-semibold text-lg sm:text-xl">
-                Chose Pin Category
+              <p className="mb-2 font-semibold text:lg sm:text-xl">
+                Choose Pin Category
               </p>
               <select
-                onChange={(e) => setCatagory(e.target.value)}
-                className="outline-none w-4/5 text-base border-b-2 border-gray-200 rounded-md cursor-pointer"
+                onChange={(e) => {
+                  setCatagory(e.target.value);
+                }}
+                className="outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
               >
-                <option value="other" className="bg-white">
+                <option value="other" className="sm:text-bg bg-white">
                   Select Catagory
                 </option>
-                {categories.map((catagory) => (
+                {categories.map((item, index) => (
                   <option
-                    className="text-base boarder-0 outline-none capitlize bg-white text-black"
-                    value={catagory.name}
+                    className="text-base border-0 outline-none capitalize bg-white text-black "
+                    value={item.name}
+                    key={index}
                   >
-                    {catagory.name}
+                    {item.name}
                   </option>
                 ))}
               </select>
