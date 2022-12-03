@@ -10,8 +10,8 @@ import { pinDetailMorePinQuery, pinDetailQuery } from "../utils/data";
 import Spinner from "./Spinner";
 
 const PinDetail = ({ user }) => {
-  const [Pins, setPins] = useState(null);
-  const [pinDetail, setPineDetail] = useState(null);
+  const [pins, setPins] = useState();
+  const [pinDetail, setPinDetail] = useState();
   const [comment, setComment] = useState("");
   const [addingComment, setAddingComment] = useState(false);
   const { pinId } = useParams();
@@ -21,7 +21,8 @@ const PinDetail = ({ user }) => {
 
     if (query) {
       client.fetch(`${query}`).then((data) => {
-        setPineDetail(data[0]);
+        setPinDetail(data[0]);
+        console.log(data);
 
         if (data[0]) {
           const query1 = pinDetailMorePinQuery(data[0]);
@@ -43,7 +44,7 @@ const PinDetail = ({ user }) => {
       setAddingComment(true);
       client
         .patch(pinId)
-        .setIfMissing({ comment: [] })
+        .setIfMissing({ comments: [] })
         .insert("after", "comments[-1]", [
           {
             comment,
@@ -100,16 +101,16 @@ const PinDetail = ({ user }) => {
           <p className="mt-3">{pinDetail.about}</p>
         </div>
         <Link
-          to={`user-profile/${pinDetail.postedBy?._id}`}
+          to={`/user-profile/${pinDetail?.postedBy?._id}`}
           className="flex gap-2 mt-5 items-center bg-white rounded-lg"
         >
           <img
             className="w-8 h-8 rounded-full object-cover"
-            src={pinDetail.postedBy?.image}
+            src={pinDetail?.postedBy.image}
             alt="user-profile"
           />
           <p className="font-semiboald capitalize">
-            {pinDetail.postedBy?.userName}
+            {pinDetail?.postedBy?.userName}
           </p>
         </Link>
         <h2 className="mt-5 text-2xl">Comments</h2>
