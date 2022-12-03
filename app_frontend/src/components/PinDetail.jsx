@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IoMdRocket } from "react-icons/io";
 import { MdDownloadForOffline } from "react-icons/md";
-import { Link, useParamas } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { client, urlFor } from "../client";
@@ -14,9 +14,7 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPineDetail] = useState(null);
   const [comment, setComment] = useState("");
   const [addingComment, setAddingComment] = useState(false);
-  const { pinId } = useParamas();
-
-  if (!pinDetail) return <Spinner message="Loading pin" />;
+  const { pinId } = useParams();
 
   const fetchPinDetails = () => {
     const query = pinDetailQuery(pinId);
@@ -37,6 +35,8 @@ const PinDetail = ({ user }) => {
   useEffect(() => {
     fetchPinDetails();
   }, [pinId]);
+
+  if (!pinDetail) return <Spinner message="Loading pin" />;
 
   return <div>PinDetail</div>;
 };
