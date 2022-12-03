@@ -62,6 +62,43 @@ const PinDetail = ({ user }) => {
               <MdDownloadForOffline />
             </a>
           </div>
+          <a href={pinDetail.destination} target="_blank" rel="noreferrer">
+            {pinDetail.destination}
+          </a>
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold break-words mt-3">
+            {pinDetail.title}
+          </h1>
+          <p className="mt-3">{pinDetail.about}</p>
+        </div>
+        <Link
+          to={`user-profile/${pinDetail.postedBy?._id}`}
+          className="flex gap-2 mt-5 items-center bg-white rounded-lg"
+        >
+          <img
+            className="w-8 h-8 rounded-full object-cover"
+            src={pinDetail.postedBy?.image}
+            alt="user-profile"
+          />
+          <p className="font-semiboald capitalize">
+            {pinDetail.postedBy?.userName}
+          </p>
+        </Link>
+        <h2 className="mt-5 text-2xl">Comments</h2>
+        <div className="max-h-370 overwflow-y-auto">
+          {pinDetail?.comments?.map((comment, i) => (
+            <div
+              className="flex gap-2 mt-5 items-center bg-white rounded-lg"
+              key={i}
+            >
+              <img
+                src={comment.postedBy.image}
+                alt="user-profile"
+                className="w-10 h-10 rounded-full cursor-pointer"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
