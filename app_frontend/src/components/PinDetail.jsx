@@ -16,7 +16,7 @@ const PinDetail = ({ user }) => {
   const [addingComment, setAddingComment] = useState(false);
   const { pinId } = useParamas();
 
-  if (!pinDetail) return <spinner message="Loading pin" />;
+  if (!pinDetail) return <Spinner message="Loading pin" />;
 
   const fetchPinDetails = () => {
     const query = pinDetailQuery(pinId);
