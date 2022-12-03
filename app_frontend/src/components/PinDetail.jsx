@@ -16,13 +16,35 @@ const PinDetail = ({ user }) => {
   const [addingComment, setAddingComment] = useState(false);
   const { pinId } = useParams();
 
+  const fetchPinDetails = () => {
+    const query = pinDetailQuery(pinId);
+
+    if (query) {
+      client.fetch(`${query}`).then((data) => {
+        setPineDetail(data[0]);
+
+        if (data[0]) {
+          const query1 = pinDetailMorePinQuery(data[0]);
+
+          client.fetch(query1).then((res) => {
+            setPins(res);
+          });
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchPinDetails();
+  }, [pinId]);
+
   const addComment = () => {
     if (comment) {
       setAddingComment(true);
       client
         .patch(pinId)
         .setIfMissing({ comment: [] })
-        .insert("after", "comment[-1]", [
+        .insert("after", "comments[-1]", [
           {
             comment,
             _key: uuidv4(),
@@ -40,26 +62,6 @@ const PinDetail = ({ user }) => {
         });
     }
   };
-
-  const fetchPinDetails = () => {
-    const query = pinDetailQuery(pinId);
-
-    if (query) {
-      client.fetch(query).then((data) => {
-        setPineDetail(data[0]);
-
-        if (data[0]) {
-          query = pinDetailMorePinQuery(data[0]);
-
-          client.fetch(query).then((res) => setPins(res));
-        }
-      });
-    }
-  };
-
-  useEffect(() => {
-    fetchPinDetails();
-  }, [pinId]);
 
   if (!pinDetail) return <Spinner message="Loading pin" />;
 
@@ -111,20 +113,20 @@ const PinDetail = ({ user }) => {
           </p>
         </Link>
         <h2 className="mt-5 text-2xl">Comments</h2>
-        <div className="max-h-370 overwflow-y-auto">
-          {pinDetail?.comments?.map((comment, i) => (
+        <div className="max-h-370 overflow-y-auto">
+          {pinDetail?.comments?.map((item) => (
             <div
               className="flex gap-2 mt-5 items-center bg-white rounded-lg"
-              key={i}
+              key={item.comment}
             >
               <img
-                src={comment.postedBy.image}
+                src={item.postedBy?.image}
                 alt="user-profile"
                 className="w-10 h-10 rounded-full cursor-pointer"
               />
               <div className="flex flex-col">
-                <p className="font-bold">{comment.postedBy.userName}</p>
-                <p>{comment.comment}</p>
+                <p className="font-bold">{item.postedBy?.userName}</p>
+                <p>{item.comment}</p>
               </div>
             </div>
           ))}
