@@ -13,6 +13,11 @@ import { client } from "../client";
 import MasonryLayout from "./MasonryLayout";
 import Spinner from "./Spinner";
 
+const activeBtnStyles =
+  "bg-red-500 text-white font-bold rounded-full w-20 outline-none";
+const notActiveBtnStyles =
+  "bg-primary  mr-4 text-black font-bold rounded-full w-20 outline-none";
+
 const randomImage =
   "https://source.unsplash.com/1600x900/?nature,photography,technology";
 
@@ -70,6 +75,34 @@ const UserProfile = () => {
                     <AiOutlineLogout color="red" fontSize={21} />
                   </button>
                 )}
+              </div>
+              <div className="text-center mb-7">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setText(e.target.textContent);
+                    setActiveBtn("created");
+                  }}
+                  className={`${
+                    activeBtn === "created"
+                      ? activeBtnStyles
+                      : notActiveBtnStyles
+                  }`}
+                >
+                  Created
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setText(e.target.textContent);
+                    setActiveBtn("saved");
+                  }}
+                  className={`${
+                    activeBtn === "saved" ? activeBtnStyles : notActiveBtnStyles
+                  }`}
+                >
+                  Saved
+                </button>
               </div>
             </div>
           </div>
