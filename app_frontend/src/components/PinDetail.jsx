@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IoMdRocket } from "react-icons/io";
+//import { IoMdRocket } from "react-icons/io";
 import { MdDownloadForOffline } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -37,6 +37,7 @@ const PinDetail = ({ user }) => {
 
   useEffect(() => {
     fetchPinDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pinId]);
 
   const addComment = () => {
@@ -69,7 +70,7 @@ const PinDetail = ({ user }) => {
   return (
     <>
       <div
-        className="flex xl-flex-row flex-col m-auto bg-white"
+        className="flex xl:flex-row flex-col m-auto bg-white"
         style={{ maxWidth: "1500px", borderRadius: "32px" }}
       >
         <div className="flex justify-center items-center md:items-start flex-initial">
@@ -83,10 +84,10 @@ const PinDetail = ({ user }) => {
           <div className="flex items-center justify-between">
             <div className="flex gap-2 items-center">
               <a
-                href={`$l{pinDetail.image.asset.url}?dl=`}
+                href={`${pinDetail.image.asset.url}?dl=`}
                 download
                 onClick={(e) => e.stopPropagation()}
-                className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
+                className="bg-secondaryColor p-2 text-xl rounded-full flex items-center justify-center text-dark opacity-75 hover:opacity-100"
               >
                 <MdDownloadForOffline />
               </a>
@@ -150,7 +151,7 @@ const PinDetail = ({ user }) => {
             />
             <button
               type="button"
-              className="bg-red-500 text-white rounded-full px-6 font-semibold text-base outline-none "
+              className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
               onClick={addComment}
             >
               {addingComment ? "Posting the comment..." : "Post"}
