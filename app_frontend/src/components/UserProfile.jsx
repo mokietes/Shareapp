@@ -12,6 +12,9 @@ import { client } from "../client";
 import MasonryLayout from "./MasonryLayout";
 import Spinner from "./Spinner";
 
+const randomImage =
+  "https://source.unsplash.com/1600*900/?nature,photography,technology";
+
 const UserProfile = () => {
   const [user, setUser] = useState();
   const [pins, setPins] = useState();
@@ -32,7 +35,21 @@ const UserProfile = () => {
     return <Spinner message="Loading Profile.." />;
   }
 
-  return <div>UserProfile</div>;
+  return (
+    <div className="relative pd-2 h-full justify-center items-center ">
+      <div className="flex flex-col pb-5">
+        <div className="relative flex flex-col mb-7">
+          <div className="flex flex-col justify-center items-center">
+            <img
+              src={randomImage}
+              className="w-full h-370 2xl:h-510 shadow-lg object-cover"
+              alt="bannerPic"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default UserProfile;
