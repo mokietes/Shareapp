@@ -6,7 +6,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
 
 import { client, urlFor } from "../client";
-import { fetchUser } from "../utils/fetchUser";
+//import { fetchUser } from "../utils/fetchUser";
 
 const Pin = ({ pin }) => {
   const [postHover, setPostHover] = useState(false);
@@ -15,24 +15,29 @@ const Pin = ({ pin }) => {
 
   const { postedBy, image, _id, destination, save } = pin;
 
-  const user = fetchUser();
+  const user =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : localStorage.clear();
 
   const alreadySaved = !!save?.save?.filter(
     (item) => item.postedBy._id === user.googleId
   )?.length;
 
   const savePin = (id) => {
-    if (!alreadySaved) {
+    if (alreadySaved?.length === 0) {
       setSavingPost(true);
+
       client
         .patch(id)
         .setIfMissing({ save: [] })
         .insert("after", "save[-1]", [
           {
             _key: uuidv4(),
-            userId: {
+            userId: user?.googleId,
+            postedBy: {
               _type: "postedBy",
-              _ref: user.googleId,
+              _ref: user?.googleId,
             },
           },
         ])
