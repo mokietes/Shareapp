@@ -35,6 +35,19 @@ const UserProfile = () => {
       setUser(data[0]);
     });
   }, [userId]);
+  useEffect(() => {
+    if (text === "Created") {
+      const createdPinQuery = userCreatedPinsQuery(userId);
+      client.fetch(createdPinQuery).then((data) => {
+        setPins(data);
+      });
+    } else {
+      const savedPinQuery = userSavedPinsQuery(userId);
+      client.fetch(savedPinQuery).then((data) => {
+        setPins(data);
+      });
+    }
+  }, [text, userId]);
 
   const logout = () => {
     localStorage.clear();
@@ -103,6 +116,17 @@ const UserProfile = () => {
                   Saved
                 </button>
               </div>
+
+              {pins?.length ? (
+                <div className="px-2">
+                  <MasonryLayout pins={pins} />
+                </div>
+              ) : (
+                <div className="flex justify-center font-bold items-center w-full text-xl mt-2">
+                  {" "}
+                  No Pins Found{" "}
+                </div>
+              )}
             </div>
           </div>
         </div>
