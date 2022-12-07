@@ -6,23 +6,31 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
 
 import { client, urlFor } from "../client";
-//import { fetchUser } from "../utils/fetchUser";
 
 const Pin = ({ pin }) => {
-  const [postHover, setPostHover] = useState(false);
+  const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
+
   const navigate = useNavigate();
 
-  const { postedBy, image, _id, destination, save } = pin;
+  const { postedBy, image, _id, destination } = pin;
 
   const user =
     localStorage.getItem("user") !== "undefined"
       ? JSON.parse(localStorage.getItem("user"))
       : localStorage.clear();
 
-  const alreadySaved = !!save?.save?.filter(
-    (item) => item.postedBy._id === user.googleId
-  )?.length;
+  const deletePin = (id) => {
+    client.delete(id).then(() => {
+      window.location.reload();
+    });
+  };
+
+  let alreadySaved = pin?.save?.filter(
+    (item) => item?.postedBy?._id === user?.googleId
+  );
+
+  alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
   const savePin = (id) => {
     if (alreadySaved?.length === 0) {
@@ -49,28 +57,24 @@ const Pin = ({ pin }) => {
     }
   };
 
-  const deletePin = (id) => {
-    client.delete(id).then(() => {
-      window.location.reload();
-    });
-  };
-
   return (
     <div className="m-2">
       <div
-        onMouseEnter={() => setPostHover(true)}
-        onMouseLeave={() => setPostHover(false)}
+        onMouseEnter={() => setPostHovered(true)}
+        onMouseLeave={() => setPostHovered(false)}
         onClick={() => navigate(`/pin-detail/${_id}`)}
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
-        <img
-          className="rounded-lg w-full "
-          alt="user-post"
-          src={urlFor(image).width(250).url()}
-        />
-        {postHover && (
+        {image && (
+          <img
+            className="rounded-lg w-full "
+            src={urlFor(image).width(250).url()}
+            alt="user-post"
+          />
+        )}
+        {postHovered && (
           <div
-            className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-1 pt-2 pd-2 z-index-50"
+            className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
             style={{ height: "100%" }}
           >
             <div className="flex items-center justify-between">
@@ -78,7 +82,9 @@ const Pin = ({ pin }) => {
                 <a
                   href={`${image?.asset?.url}?dl=`}
                   download
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                   className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
                 >
                   <MdDownloadForOffline />
@@ -89,7 +95,7 @@ const Pin = ({ pin }) => {
                   type="button"
                   className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
-                  {save?.length}Saved
+                  {pin?.save?.length} Saved
                 </button>
               ) : (
                 <button
@@ -104,22 +110,20 @@ const Pin = ({ pin }) => {
                 </button>
               )}
             </div>
-            <div className="flex justify-between items-center gap-2 w-full">
-              {destination && (
+            <div className=" flex justify-between items-center gap-2 w-full">
+              {destination?.slice(8).length > 0 ? (
                 <a
                   href={destination}
-                  target="blank"
+                  target="_blank"
                   className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
                   rel="noreferrer"
                 >
                   {" "}
-                  <BsFillArrowUpRightCircleFill />{" "}
-                  {destination.length > 15
-                    ? `${destination.slice(0, 15)}...`
-                    : destination}
+                  <BsFillArrowUpRightCircleFill />
+                  {destination?.slice(8, 17)}...
                 </a>
-              )}
-              {postedBy?.id === user.googleId && (
+              ) : undefined}
+              {postedBy?._id === user?.googleId && (
                 <button
                   type="button"
                   onClick={(e) => {
@@ -136,7 +140,7 @@ const Pin = ({ pin }) => {
         )}
       </div>
       <Link
-        to={`user-profile/${postedBy?._id}`}
+        to={`/user-profile/${postedBy?._id}`}
         className="flex gap-2 mt-2 items-center"
       >
         <img
@@ -144,7 +148,7 @@ const Pin = ({ pin }) => {
           src={postedBy?.image}
           alt="user-profile"
         />
-        <p className="font-semiboald capitalize">{postedBy?.userName}</p>
+        <p className="font-semibold capitalize">{postedBy?.userName}</p>
       </Link>
     </div>
   );

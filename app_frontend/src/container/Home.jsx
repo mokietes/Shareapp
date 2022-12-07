@@ -4,37 +4,39 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
 
 import { Sidebar, UserProfile } from "../components";
-import { client } from "../client";
-import logo from "../assets/logo.png";
 import { userQuery } from "../utils/data";
+import { client } from "../client";
 import Pins from "./Pins";
-import { fetchUser } from "../utils/fetchUser";
+import logo from "../assets/logo.png";
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const scrollRef = useRef(null);
 
-  const userInfo = fetchUser();
+  const userInfo =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : localStorage.clear();
 
   useEffect(() => {
-    const query = userQuery(userInfo?.sub);
+    const query = userQuery(userInfo?.googleId);
 
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
-  });
+  }, []);
 
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
   });
 
   return (
-    <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out ">
+    <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
       <div className="hidden md:flex h-screen flex-initial">
         <Sidebar user={user && user} />
       </div>
-      <div className="flex md:hidden flex-row ">
+      <div className="flex md:hidden flex-row">
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
           <HiMenu
             fontSize={40}
@@ -65,7 +67,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="pb-2 flex-1 h-screen overflow-scroll" ref={scrollRef}>
+      <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
         <Routes>
           <Route path="/user-profile/:userId" element={<UserProfile />} />
           <Route path="/*" element={<Pins user={user && user} />} />
