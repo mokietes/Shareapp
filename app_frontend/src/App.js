@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 //import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -13,7 +14,9 @@ const App = () => {
   useEffect(() => {
     const user = fetchUser();
 
-    if (!user) navigate("./login");
+    if (!user) {
+      navigate("./login");
+    }
   }, []);
 
   return (
