@@ -178,7 +178,7 @@ const CreatePin = ({ user }) => {
                 }}
                 className="outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
               >
-                <option value="other" className="sm:text-bg bg-white">
+                <option value="others" className="sm:text-bg bg-white">
                   Select Category
                 </option>
                 {categories.map((item) => (

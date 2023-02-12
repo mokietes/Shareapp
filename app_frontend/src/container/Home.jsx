@@ -20,7 +20,7 @@ const Home = () => {
       : localStorage.clear();
 
   useEffect(() => {
-    const query = userQuery(userInfo?.sub);
+    const query = userQuery(userInfo?.googleId);
 
     client.fetch(query).then((data) => {
       setUser(data[0]);
