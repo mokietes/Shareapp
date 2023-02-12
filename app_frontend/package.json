@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.4.0",
+    "@craco/craco": "^6.4.5",
     "@leecheuk/react-google-login": "^5.4.1",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.8",
