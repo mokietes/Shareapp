@@ -10,7 +10,6 @@
     "@sanity/client": "^3.4.1",
     "@sanity/image-url": "^1.0.1",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "eslint-plugin-react-hooks": "^5.0.0-next-55542bc73-20230210",
     "jwt-decode": "^3.1.2",
@@ -51,6 +50,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.0.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.1",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
